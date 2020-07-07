@@ -27,17 +27,22 @@ class Android
      * @param $title
      * @param $text
      * @param array $data
+     * @param string $text
+     * @param string $ticker
      * @return bool|string
+     * @throws Exception
      */
-    function sendBroadcast($title, $text, $data = [])
+    function sendBroadcast($title, $text, $data = [], $text = '', $ticker = '')
     {
 //        try {
+        $ticker = $ticker ?: $title;
+        $text = $text ?: $title;
         $brocast = new AndroidBroadcast();
         $brocast->setAppMasterSecret($this->appMasterSecret);
         $brocast->setPredefinedKeyValue("appkey", $this->appkey);
         $brocast->setPredefinedKeyValue("timestamp", $this->timestamp);
         $brocast->setPredefinedKeyValue("ticker", "{$title}");
-        $brocast->setPredefinedKeyValue("title", "{$title}");
+        $brocast->setPredefinedKeyValue("title", "{$ticker}");
         $brocast->setPredefinedKeyValue("text", "{$text}");
         $brocast->setPredefinedKeyValue("after_open", "go_app");
         // Set 'production_mode' to 'false' if it's a test device.
@@ -58,21 +63,25 @@ class Android
     /**
      * 按设备token发送
      * @param $title
-     * @param $text
      * @param $device_tokens
      * @param array $data
+     * @param string $text
+     * @param string $ticker
      * @return bool|string
+     * @throws Exception
      */
-    function sendUnicast($title, $text, $device_tokens, $data = [])
+    function sendUnicast($title, $device_tokens, $data = [], $text = '', $ticker = '')
     {
 //        try {
+        $ticker = $ticker ?: $title;
+        $text = $text ?: $title;
         $unicast = new AndroidUnicast();
         $unicast->setAppMasterSecret($this->appMasterSecret);
         $unicast->setPredefinedKeyValue("appkey", $this->appkey);
         $unicast->setPredefinedKeyValue("timestamp", $this->timestamp);
         // Set your device tokens here
         $unicast->setPredefinedKeyValue("device_tokens", $device_tokens);
-        $unicast->setPredefinedKeyValue("ticker", "{$title}");
+        $unicast->setPredefinedKeyValue("ticker", "{$ticker}");
         $unicast->setPredefinedKeyValue("title", "{$title}");
         $unicast->setPredefinedKeyValue("text", "{$text}");
         $unicast->setPredefinedKeyValue("after_open", "go_custom");
@@ -92,18 +101,22 @@ class Android
     /**
      * 发送图片消息
      * @param $title
-     * @param $text
      * @param $image
+     * @param string $text
+     * @param string $ticker
      * @return bool|string
+     * @throws Exception
      */
-    function sendFilecast($title, $text, $image)
+    function sendFilecast($title, $image, $text = '', $ticker = '')
     {
 //        try {
+        $ticker = $ticker ?: $title;
+        $text = $text ?: $title;
         $filecast = new AndroidFilecast();
         $filecast->setAppMasterSecret($this->appMasterSecret);
         $filecast->setPredefinedKeyValue("appkey", $this->appkey);
         $filecast->setPredefinedKeyValue("timestamp", $this->timestamp);
-        $filecast->setPredefinedKeyValue("ticker", "{$title}");
+        $filecast->setPredefinedKeyValue("ticker", "{$ticker}");
         $filecast->setPredefinedKeyValue("title", "{$title}");
         $filecast->setPredefinedKeyValue("text", "{$text}");
         $filecast->setPredefinedKeyValue("after_open", "go_app");  //go to app
@@ -127,7 +140,7 @@ class Android
      * @param $tags
      * @return bool|string
      */
-    function sendGroupcast($ticker, $title, $text, $tags)
+    function sendGroupcast($title, $tags, $text = '', $ticker = '')
     {
 //        try {
         /*
@@ -146,6 +159,8 @@ class Android
                 "and" => $tags
             )
         );
+        $ticker = $ticker ?: $title;
+        $text = $text ?: $title;
 
         $groupcast = new AndroidGroupcast();
         $groupcast->setAppMasterSecret($this->appMasterSecret);
@@ -170,16 +185,19 @@ class Android
 
     /**
      * 自有的账号系统(alias) 来发送消息给指定的账号或者账号群
-     * @param $ticker
      * @param $title
-     * @param $text
      * @param $alias
      * @param $alias_type
+     * @param string $text
+     * @param string $ticker
      * @return bool|string
+     * @throws Exception
      */
-    function sendCustomizedcast($ticker, $title, $text, $alias, $alias_type)
+    function sendCustomizedcast($title, $alias, $alias_type, $text = '', $ticker = '')
     {
 //        try {
+        $ticker = $ticker ?: $title;
+        $text = $text ?: $title;
         $customizedcast = new AndroidCustomizedcast();
         $customizedcast->setAppMasterSecret($this->appMasterSecret);
         $customizedcast->setPredefinedKeyValue("appkey", $this->appkey);
