@@ -75,6 +75,9 @@ class Android
 //        try {
         $ticker = $ticker ?: $title;
         $text = $text ?: $title;
+        if (is_array($device_tokens)) {
+            $device_tokens = implode(',', $device_tokens);
+        }
         $unicast = new AndroidUnicast();
         $unicast->setAppMasterSecret($this->appMasterSecret);
         $unicast->setPredefinedKeyValue("appkey", $this->appkey);

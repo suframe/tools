@@ -69,6 +69,9 @@ class IOS
     function sendUnicast($alert, $device_tokens, $data = [])
     {
         // try {
+        if (is_array($device_tokens)) {
+            $device_tokens = implode(',', $device_tokens);
+        }
         $unicast = new IOSUnicast();
         $unicast->setAppMasterSecret($this->appMasterSecret);
         $unicast->setPredefinedKeyValue("appkey", $this->appkey);
