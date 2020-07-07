@@ -13,15 +13,6 @@
       "suframe\\tools\\": "src"
     }
   },
-  "extra": {
-    "think": {
-      "services": [
-      ],
-      "config": {
-        "oss": "src/config/tools.php"
-      }
-    }
-  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
