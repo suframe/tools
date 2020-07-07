@@ -22,6 +22,13 @@ class IOS
         $this->timestamp = strval(time());
     }
 
+    protected $logger;
+
+    public function setLogger($loger)
+    {
+        $this->logger = $loger;
+    }
+
     /**
      * 批量发送
      * @param $alert
@@ -30,25 +37,25 @@ class IOS
      */
     function sendBroadcast($alert, $data = [])
     {
-        try {
-            $brocast = new IOSBroadcast();
-            $brocast->setAppMasterSecret($this->appMasterSecret);
-            $brocast->setPredefinedKeyValue("appkey", $this->appkey);
-            $brocast->setPredefinedKeyValue("timestamp", $this->timestamp);
+//        try {
+        $brocast = new IOSBroadcast();
+        $brocast->setAppMasterSecret($this->appMasterSecret);
+        $brocast->setPredefinedKeyValue("appkey", $this->appkey);
+        $brocast->setPredefinedKeyValue("timestamp", $this->timestamp);
 
-            $brocast->setPredefinedKeyValue("alert", "{$alert}");
-            // Set 'production_mode' to 'true' if your app is under production mode
-            $brocast->setPredefinedKeyValue("production_mode", "false");
-            // Set customized fields
-            foreach ($data as $key => $item) {
-                $brocast->setCustomizedField($key, $item);
-            }
-            // print("Sending broadcast notification, please wait...\r\n");
-            return $brocast->send();
-            // print("Sent SUCCESS\r\n");
-        } catch (Exception $e) {
-            // print("Caught exception: " . $e->getMessage());
+        $brocast->setPredefinedKeyValue("alert", "{$alert}");
+        // Set 'production_mode' to 'true' if your app is under production mode
+        $brocast->setPredefinedKeyValue("production_mode", "false");
+        // Set customized fields
+        foreach ($data as $key => $item) {
+            $brocast->setCustomizedField($key, $item);
         }
+        // print("Sending broadcast notification, please wait...\r\n");
+        return $brocast->send();
+        // print("Sent SUCCESS\r\n");
+//        } catch (Exception $e) {
+        // print("Caught exception: " . $e->getMessage());
+//        }
     }
 
     /**
@@ -91,25 +98,25 @@ class IOS
      */
     function sendFilecast($alert, $image)
     {
-        try {
-            $filecast = new IOSFilecast();
-            $filecast->setAppMasterSecret($this->appMasterSecret);
-            $filecast->setPredefinedKeyValue("appkey", $this->appkey);
-            $filecast->setPredefinedKeyValue("timestamp", $this->timestamp);
+//        try {
+        $filecast = new IOSFilecast();
+        $filecast->setAppMasterSecret($this->appMasterSecret);
+        $filecast->setPredefinedKeyValue("appkey", $this->appkey);
+        $filecast->setPredefinedKeyValue("timestamp", $this->timestamp);
 
-            $filecast->setPredefinedKeyValue("alert", "{$alert}");
-            // Set 'production_mode' to 'true' if your app is under production mode
-            $filecast->setPredefinedKeyValue("production_mode", "false");
-            // print("Uploading file contents, please wait...\r\n");
-            // Upload your device tokens, and use '\n' to split them if there are multiple tokens
+        $filecast->setPredefinedKeyValue("alert", "{$alert}");
+        // Set 'production_mode' to 'true' if your app is under production mode
+        $filecast->setPredefinedKeyValue("production_mode", "false");
+        // print("Uploading file contents, please wait...\r\n");
+        // Upload your device tokens, and use '\n' to split them if there are multiple tokens
 //            $filecast->uploadContents("aa" . "\n" . "bb");
-            $filecast->uploadContents($image);
-            // print("Sending filecast notification, please wait...\r\n");
-            return $filecast->send();
-            // print("Sent SUCCESS\r\n");
-        } catch (Exception $e) {
-            // print("Caught exception: " . $e->getMessage());
-        }
+        $filecast->uploadContents($image);
+        // print("Sending filecast notification, please wait...\r\n");
+        return $filecast->send();
+        // print("Sent SUCCESS\r\n");
+//        } catch (Exception $e) {
+        // print("Caught exception: " . $e->getMessage());
+//        }
     }
 
     /**
@@ -120,38 +127,38 @@ class IOS
      */
     function sendGroupcast($alert, $tags)
     {
-        try {
-            /*
-              *  Construct the filter condition:
-              *  "where":
-              *	{
-              *		"and":
-              *		[
-                *			{"tag":"iostest"}
-              *		]
-              *	}
-              */
-            $filter = array(
-                "where" => array(
-                    "and" => $tags
-                )
-            );
+//        try {
+        /*
+          *  Construct the filter condition:
+          *  "where":
+          *	{
+          *		"and":
+          *		[
+            *			{"tag":"iostest"}
+          *		]
+          *	}
+          */
+        $filter = array(
+            "where" => array(
+                "and" => $tags
+            )
+        );
 
-            $groupcast = new IOSGroupcast();
-            $groupcast->setAppMasterSecret($this->appMasterSecret);
-            $groupcast->setPredefinedKeyValue("appkey", $this->appkey);
-            $groupcast->setPredefinedKeyValue("timestamp", $this->timestamp);
-            // Set the filter condition
-            $groupcast->setPredefinedKeyValue("filter", $filter);
-            $groupcast->setPredefinedKeyValue("alert", "{$alert}");
-            // Set 'production_mode' to 'true' if your app is under production mode
-            $groupcast->setPredefinedKeyValue("production_mode", "false");
-            // print("Sending groupcast notification, please wait...\r\n");
-            return $groupcast->send();
-            // print("Sent SUCCESS\r\n");
-        } catch (Exception $e) {
-            // print("Caught exception: " . $e->getMessage());
-        }
+        $groupcast = new IOSGroupcast();
+        $groupcast->setAppMasterSecret($this->appMasterSecret);
+        $groupcast->setPredefinedKeyValue("appkey", $this->appkey);
+        $groupcast->setPredefinedKeyValue("timestamp", $this->timestamp);
+        // Set the filter condition
+        $groupcast->setPredefinedKeyValue("filter", $filter);
+        $groupcast->setPredefinedKeyValue("alert", "{$alert}");
+        // Set 'production_mode' to 'true' if your app is under production mode
+        $groupcast->setPredefinedKeyValue("production_mode", "false");
+        // print("Sending groupcast notification, please wait...\r\n");
+        return $groupcast->send();
+        // print("Sent SUCCESS\r\n");
+//        } catch (Exception $e) {
+        // print("Caught exception: " . $e->getMessage());
+//        }
     }
 
     /**
@@ -163,26 +170,26 @@ class IOS
      */
     function sendCustomizedcast($alert, $alias, $alias_type)
     {
-        try {
-            $customizedcast = new IOSCustomizedcast();
-            $customizedcast->setAppMasterSecret($this->appMasterSecret);
-            $customizedcast->setPredefinedKeyValue("appkey", $this->appkey);
-            $customizedcast->setPredefinedKeyValue("timestamp", $this->timestamp);
+//        try {
+        $customizedcast = new IOSCustomizedcast();
+        $customizedcast->setAppMasterSecret($this->appMasterSecret);
+        $customizedcast->setPredefinedKeyValue("appkey", $this->appkey);
+        $customizedcast->setPredefinedKeyValue("timestamp", $this->timestamp);
 
-            // Set your alias here, and use comma to split them if there are multiple alias.
-            // And if you have many alias, you can also upload a file containing these alias, then
-            // use file_id to send customized notification.
-            $customizedcast->setPredefinedKeyValue("alias", "{$alias}");
-            // Set your alias_type here
-            $customizedcast->setPredefinedKeyValue("alias_type", "{$alias_type}");
-            $customizedcast->setPredefinedKeyValue("alert", "{$alert}");
-            // Set 'production_mode' to 'true' if your app is under production mode
-            $customizedcast->setPredefinedKeyValue("production_mode", "false");
-            // print("Sending customizedcast notification, please wait...\r\n");
-            return $customizedcast->send();
-            // print("Sent SUCCESS\r\n");
-        } catch (Exception $e) {
-            // print("Caught exception: " . $e->getMessage());
-        }
+        // Set your alias here, and use comma to split them if there are multiple alias.
+        // And if you have many alias, you can also upload a file containing these alias, then
+        // use file_id to send customized notification.
+        $customizedcast->setPredefinedKeyValue("alias", "{$alias}");
+        // Set your alias_type here
+        $customizedcast->setPredefinedKeyValue("alias_type", "{$alias_type}");
+        $customizedcast->setPredefinedKeyValue("alert", "{$alert}");
+        // Set 'production_mode' to 'true' if your app is under production mode
+        $customizedcast->setPredefinedKeyValue("production_mode", "false");
+        // print("Sending customizedcast notification, please wait...\r\n");
+        return $customizedcast->send();
+        // print("Sent SUCCESS\r\n");
+//        } catch (Exception $e) {
+        // print("Caught exception: " . $e->getMessage());
+//        }
     }
 }
