@@ -1,0 +1,29 @@
+{
+  "name": "suframe/tools",
+  "description": "suframe thinkphp tools",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "qian",
+      "email": "330576744@qq.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "suframe\\tools\\": "src"
+    }
+  },
+  "extra": {
+    "think": {
+      "services": [
+      ],
+      "config": {
+        "oss": "src/config/tools.php"
+      }
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+  }
+}
