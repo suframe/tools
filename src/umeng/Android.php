@@ -25,14 +25,13 @@ class Android
     /**
      * 批量发送
      * @param $title
-     * @param $text
      * @param array $data
-     * @param string $text
      * @param string $ticker
+     * @param string $text
      * @return bool|string
      * @throws Exception
      */
-    function sendBroadcast($title, $text, $data = [], $text = '', $ticker = '')
+    function sendBroadcast($title, $data = [], $ticker = '', $text = '')
     {
 //        try {
         $ticker = $ticker ?: $title;
